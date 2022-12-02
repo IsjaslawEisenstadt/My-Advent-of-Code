@@ -6,7 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+anyhow = "1.0"
 
 [[bin]]
-name = "d1p1"
-path = "src/day1/part1.rs"
+name = "day1"
+path = "src/day1.rs"
