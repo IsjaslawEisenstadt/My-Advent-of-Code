@@ -6,19 +6,23 @@ use std::io::BufReader;
 use anyhow::{anyhow, bail, Result};
 
 #[test]
-fn test_find_most_calories_for_one_elf() -> Result<()> {
-	assert_eq!(find_highest_calories(File::open("inputs/day1.txt")?, 1)?, 66616);
+fn test_find_most_calories_for_one_elf() -> Result<()>
+{
+	assert_eq!(find_highest_calories(File::open("inputs/2022/day1.txt")?, 1)?, 66616);
 	Ok(())
 }
 
 #[test]
-fn test_find_most_calories_for_three_elves() -> Result<()> {
-	assert_eq!(find_highest_calories(File::open("inputs/day1.txt")?, 3)?, 199172);
+fn test_find_most_calories_for_three_elves() -> Result<()>
+{
+	assert_eq!(find_highest_calories(File::open("inputs/2022/day1.txt")?, 3)?, 199172);
 	Ok(())
 }
 
-fn find_highest_calories(file: File, num_elves: usize) -> Result<u32> {
-	if num_elves == 0 {
+fn find_highest_calories(file: File, num_elves: usize) -> Result<u32>
+{
+	if num_elves == 0
+	{
 		bail!("Number of elves must be greater than 0!");
 	}
 
@@ -26,12 +30,18 @@ fn find_highest_calories(file: File, num_elves: usize) -> Result<u32> {
 	let mut current_elf_calories: u32 = 0;
 	let mut highest_calories: Vec<u32> = std::iter::repeat(0).take(num_elves).collect();
 
-	for line in reader.lines() {
-		if let Ok(parse_result) = line?.parse::<u32>() {
+	for line in reader.lines()
+	{
+		if let Ok(parse_result) = line?.parse::<u32>()
+		{
 			current_elf_calories += parse_result;
-		} else {
-			for calories in highest_calories.iter().rev() {
-				if current_elf_calories > *calories {
+		}
+		else
+		{
+			for calories in highest_calories.iter().rev()
+			{
+				if current_elf_calories > *calories
+				{
 					highest_calories.push(current_elf_calories);
 					highest_calories.remove(0);
 					break;
@@ -44,7 +54,8 @@ fn find_highest_calories(file: File, num_elves: usize) -> Result<u32> {
 	Ok(highest_calories.iter().sum())
 }
 
-fn main() -> Result<()> {
+fn main() -> Result<()>
+{
 	let args = env::args().collect::<Vec<String>>();
 
 	println!(
