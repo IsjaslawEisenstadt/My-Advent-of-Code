@@ -96,14 +96,9 @@ where S: Fn(Shape, &char) -> Result<Shape>
 
 	for (i, line) in BufReader::new(strategy_guide).lines().enumerate()
 	{
-		let line_chars: Vec<char> = line
-			.with_context(|| format!("Failed to read line {}!", i))?
-			.chars()
-			.collect::<Vec<char>>();
+		let line_chars: Vec<char> = line.with_context(|| format!("Failed to read line {}!", i))?.chars().collect::<Vec<char>>();
 
-		let enemy_shape: Shape = match line_chars
-			.first()
-			.ok_or_else(|| anyhow!("Line {} is missing an enemy shape!", i))?
+		let enemy_shape: Shape = match line_chars.first().ok_or_else(|| anyhow!("Line {} is missing an enemy shape!", i))?
 		{
 			'A' => Ok(Shape::Rock),
 			'B' => Ok(Shape::Paper),
@@ -113,9 +108,7 @@ where S: Fn(Shape, &char) -> Result<Shape>
 
 		let player_shape: Shape = player_strategy(
 			enemy_shape,
-			line_chars
-				.get(2)
-				.ok_or_else(|| anyhow!("Line {} is missing a player shape!", i))?
+			line_chars.get(2).ok_or_else(|| anyhow!("Line {} is missing a player shape!", i))?
 		)?;
 
 		let round_outcome: RoundOutcome = player_shape.get_outcome(enemy_shape);
